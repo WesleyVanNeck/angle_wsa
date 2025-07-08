@@ -1,4 +1,4 @@
-# This file is used to manage the dependencies of the ANGLE git repo. It is
+A# This file is used to manage the dependencies of the ANGLE git repo. It is
 # used by gclient to determine what version of each dependency to check out, and
 # where.
 
@@ -991,11 +991,6 @@ deps = {
     'condition': 'checkout_android and not build_with_chromium',
   },
 
-  'third_party/SwiftShader': {
-    'url': Var('swiftshader_git') + '/SwiftShader@720189cae8478484f51531a9eed9abc6d8635271',
-    'condition': 'not build_with_chromium',
-  },
-
   'third_party/turbine/cipd': {
       'packages': [
           {
@@ -1005,10 +1000,6 @@ deps = {
       ],
       'condition': 'checkout_android and not build_with_chromium',
       'dep_type': 'cipd',
-  },
-
-  'third_party/VK-GL-CTS/src': {
-    'url': Var('chromium_git') + '/external/github.com/KhronosGroup/VK-GL-CTS' + '@' + Var('vk_gl_cts_revision'),
   },
 
   'third_party/vulkan-deps': {
