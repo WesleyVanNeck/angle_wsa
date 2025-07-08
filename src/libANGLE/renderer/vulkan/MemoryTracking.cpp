@@ -485,7 +485,7 @@ void MemoryAllocationTracker::setPendingMemoryAlloc(vk::MemoryAllocationType all
         return;
     }
 
-  //  ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
+    INFO(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
     mPendingMemoryAllocationType = allocType;
     mPendingMemoryAllocationSize = size;
     mPendingMemoryTypeIndex      = memoryTypeIndex;
