@@ -476,14 +476,19 @@ uint32_t MemoryAllocationTracker::getPendingMemoryTypeIndex() const
     return mPendingMemoryTypeIndex;
 }
 
-vk::MemoryAllocationType MemoryAllocationTracker::getPendingMemoryAllocationType() const
+void MemoryAllocationTracker::setPendingMemoryAlloc(vk::MemoryAllocationType allocType,
+                                                    VkDeviceSize size,
+                                                    uint32_t memoryTypeIndex)
 {
     if (!kTrackMemoryAllocationSizes)
     {
-        return vk::MemoryAllocationType::Unspecified;
+        return;
     }
 
-    return mPendingMemoryAllocationType;
+  //  ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
+    mPendingMemoryAllocationType = allocType;
+    mPendingMemoryAllocationSize = size;
+    mPendingMemoryTypeIndex      = memoryTypeIndex;
 }
 
 void MemoryAllocationTracker::resetPendingMemoryAlloc()
