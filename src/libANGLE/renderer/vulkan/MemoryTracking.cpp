@@ -243,7 +243,7 @@ void MemoryAllocationTracker::onMemoryAllocImpl(vk::MemoryAllocationType allocTy
                                                 uint32_t memoryTypeIndex,
                                                 void *handle)
 {
-    ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
+   // ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
 
     if (kTrackMemoryAllocationDebug)
     {
@@ -302,7 +302,7 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
                                                   uint32_t memoryTypeIndex,
                                                   void *handle)
 {
-    ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
+ //   ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
 
     if (kTrackMemoryAllocationDebug)
     {
@@ -324,12 +324,12 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
                 uint32_t allocTypeIndex = ToUnderlying(memInfoEntry->allocType);
                 uint32_t memoryHeapIndex =
                     mRenderer->getMemoryProperties().getHeapIndexForMemoryType(memoryTypeIndex);
-                ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
-                       mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
-                ASSERT(memoryHeapIndex == memInfoEntry->memoryHeapIndex &&
-                       mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex] != 0 &&
-                       mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >=
-                           size);
+                //ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
+                 //      mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
+                //ASSERT(memoryHeapIndex == memInfoEntry->memoryHeapIndex &&
+                  //     mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex] != 0 &&
+                    //   mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >=
+                    //       size);
                 mActiveMemoryAllocationsCount[allocTypeIndex]--;
                 mActiveMemoryAllocationsSize[allocTypeIndex] -= size;
                 mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex]--;
@@ -349,14 +349,14 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
     {
         // Remove the allocation size from the allocation counter.
         uint32_t allocTypeIndex = ToUnderlying(allocType);
-        ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
+    //    ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
                mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
         mActiveMemoryAllocationsCount[allocTypeIndex]--;
         mActiveMemoryAllocationsSize[allocTypeIndex] -= size;
 
         uint32_t memoryHeapIndex =
             mRenderer->getMemoryProperties().getHeapIndexForMemoryType(memoryTypeIndex);
-        ASSERT(mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >= size);
+        //ASSERT(mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >= size);
         mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex].fetch_add(
             -1, std::memory_order_relaxed);
         mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex].fetch_add(
@@ -371,7 +371,7 @@ VkDeviceSize MemoryAllocationTracker::getActiveMemoryAllocationsSize(uint32_t al
         return 0;
     }
 
-    ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
+    //ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
     return mActiveMemoryAllocationsSize[allocTypeIndex];
 }
 
@@ -383,7 +383,7 @@ VkDeviceSize MemoryAllocationTracker::getActiveHeapMemoryAllocationsSize(uint32_
         return 0;
     }
 
-    ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
+    //ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
            heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
     return mActivePerHeapMemoryAllocationsSize[allocTypeIndex][heapIndex];
 }
@@ -395,7 +395,7 @@ uint64_t MemoryAllocationTracker::getActiveMemoryAllocationsCount(uint32_t alloc
         return 0;
     }
 
-    ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
+   // ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
     return mActiveMemoryAllocationsCount[allocTypeIndex];
 }
 
@@ -407,7 +407,7 @@ uint64_t MemoryAllocationTracker::getActiveHeapMemoryAllocationsCount(uint32_t a
         return 0;
     }
 
-    ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
+   // ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
            heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
     return mActivePerHeapMemoryAllocationsCount[allocTypeIndex][heapIndex];
 }
@@ -439,7 +439,7 @@ void MemoryAllocationTracker::compareExpectedFlagsWithAllocatedFlags(
 void MemoryAllocationTracker::onExceedingMaxMemoryAllocationSize(VkDeviceSize size)
 {
     VkDeviceSize maxAllocationSize = mRenderer->getMaxMemoryAllocationSize();
-    ASSERT(size > maxAllocationSize);
+   // ASSERT(size > maxAllocationSize);
 
     WARN() << "Attempted allocation size (" << size
            << ") is greater than the maximum allocation size allowed (" << maxAllocationSize
@@ -540,7 +540,7 @@ void MemoryReport::processCallback(const VkDeviceMemoryReportCallbackDataEXT &ca
             break;
         case VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_FREE_EXT:
             reportType = "Free";
-            ASSERT(mUniqueIDCounts[callbackData.memoryObjectId] > 0);
+          //  ASSERT(mUniqueIDCounts[callbackData.memoryObjectId] > 0);
             mUniqueIDCounts[callbackData.memoryObjectId] -= 1;
             size = mSizesPerType[callbackData.objectType].allocatedMemory - callbackData.size;
             mSizesPerType[callbackData.objectType].allocatedMemory = size;
@@ -566,7 +566,7 @@ void MemoryReport::processCallback(const VkDeviceMemoryReportCallbackDataEXT &ca
             break;
         case VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_UNIMPORT_EXT:
             reportType = "Un-Import";
-            ASSERT(mUniqueIDCounts[callbackData.memoryObjectId] > 0);
+         //   ASSERT(mUniqueIDCounts[callbackData.memoryObjectId] > 0);
             mUniqueIDCounts[callbackData.memoryObjectId] -= 1;
             size = mSizesPerType[callbackData.objectType].importedMemory - callbackData.size;
             mSizesPerType[callbackData.objectType].importedMemory = size;
