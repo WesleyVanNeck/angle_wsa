@@ -464,6 +464,11 @@ deps = {
     'condition': 'not build_with_chromium',
   },
 
+  'third_party/clang-format/script': {
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git@37f6e68a107df43b7d7e044fd36a13cbae3413f2',
+    'condition': 'not build_with_chromium',
+  },
+
   'buildtools/linux64': {
     'packages': [
       {
@@ -801,11 +806,6 @@ deps = {
 
   'third_party/libpng/src': {
     'url': Var('android_git') + '/platform/external/libpng@8cc222cd3e79fa5190f3aa039a03a4cbea6cfbe7',
-    'condition': 'not build_with_chromium',
-  },
-
-  'third_party/llvm/src': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project@1fd8d3fea53e6e4573cdce55bd38ef0a7813a442',
     'condition': 'not build_with_chromium',
   },
 
