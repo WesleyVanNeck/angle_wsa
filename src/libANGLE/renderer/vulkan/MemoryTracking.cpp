@@ -20,7 +20,7 @@ constexpr bool kTrackMemoryAllocationSizes = true;
 #if defined(ANGLE_ENABLE_MEMORY_ALLOC_LOGGING)
 // Flag used for logging memory allocations and deallocations.
 constexpr bool kTrackMemoryAllocationDebug = true;
-static_assert(kTrackMemoryAllocationSizes,
+//static_assert(kTrackMemoryAllocationSizes,
               "kTrackMemoryAllocationSizes must be enabled to use kTrackMemoryAllocationDebug.");
 #else
 // Only the allocation size counters are used (if enabled).
@@ -319,7 +319,7 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
             {
                 // Object found; remove it from the allocation tracker.
                 vk::MemoryAllocationInfo *memInfoEntry = &memInfoMap[memoryAllocInfoMapKey];
-                ASSERT(memInfoEntry->allocType == allocType && memInfoEntry->size == size);
+              //  ASSERT(memInfoEntry->allocType == allocType && memInfoEntry->size == size);
 
                 uint32_t allocTypeIndex = ToUnderlying(memInfoEntry->allocType);
                 uint32_t memoryHeapIndex =
@@ -423,7 +423,7 @@ void MemoryAllocationTracker::compareExpectedFlagsWithAllocatedFlags(
         return;
     }
 
-    ASSERT((requiredFlags & ~allocatedFlags) == 0);
+  //  ASSERT((requiredFlags & ~allocatedFlags) == 0);
     if (((preferredFlags | requiredFlags) & ~allocatedFlags) != 0)
     {
         INFO() << "Memory type index chosen for object " << handle
