@@ -324,12 +324,12 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
                 uint32_t allocTypeIndex = ToUnderlying(memInfoEntry->allocType);
                 uint32_t memoryHeapIndex =
                     mRenderer->getMemoryProperties().getHeapIndexForMemoryType(memoryTypeIndex);
-                //ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
-                 //      mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
-                //ASSERT(memoryHeapIndex == memInfoEntry->memoryHeapIndex &&
-                  //     mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex] != 0 &&
-                    //   mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >=
-                    //       size);
+                ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
+                       mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
+                ASSERT(memoryHeapIndex == memInfoEntry->memoryHeapIndex &&
+                       mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex] != 0 &&
+                       mActivePerHeapMemoryAllocationsSize[allocTypeIndex][memoryHeapIndex] >=
+                           size);
                 mActiveMemoryAllocationsCount[allocTypeIndex]--;
                 mActiveMemoryAllocationsSize[allocTypeIndex] -= size;
                 mActivePerHeapMemoryAllocationsCount[allocTypeIndex][memoryHeapIndex]--;
@@ -350,7 +350,7 @@ void MemoryAllocationTracker::onMemoryDeallocImpl(vk::MemoryAllocationType alloc
         // Remove the allocation size from the allocation counter.
         uint32_t allocTypeIndex = ToUnderlying(allocType);
     //    ASSERT(mActiveMemoryAllocationsCount[allocTypeIndex] != 0 &&
-               mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
+               //mActiveMemoryAllocationsSize[allocTypeIndex] >= size);
         mActiveMemoryAllocationsCount[allocTypeIndex]--;
         mActiveMemoryAllocationsSize[allocTypeIndex] -= size;
 
@@ -371,9 +371,9 @@ VkDeviceSize MemoryAllocationTracker::getActiveMemoryAllocationsSize(uint32_t al
         return 0;
     }
 
-    //ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
-    return mActiveMemoryAllocationsSize[allocTypeIndex];
-}
+//    ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount);
+ //   return mActiveMemoryAllocationsSize[allocTypeIndex];
+//}
 
 VkDeviceSize MemoryAllocationTracker::getActiveHeapMemoryAllocationsSize(uint32_t allocTypeIndex,
                                                                          uint32_t heapIndex) const
@@ -384,7 +384,7 @@ VkDeviceSize MemoryAllocationTracker::getActiveHeapMemoryAllocationsSize(uint32_
     }
 
     //ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
-           heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
+           //heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
     return mActivePerHeapMemoryAllocationsSize[allocTypeIndex][heapIndex];
 }
 
@@ -408,9 +408,9 @@ uint64_t MemoryAllocationTracker::getActiveHeapMemoryAllocationsCount(uint32_t a
     }
 
    // ASSERT(allocTypeIndex < vk::kMemoryAllocationTypeCount &&
-           heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
-    return mActivePerHeapMemoryAllocationsCount[allocTypeIndex][heapIndex];
-}
+       //    heapIndex < mRenderer->getMemoryProperties().getMemoryHeapCount());
+   // return mActivePerHeapMemoryAllocationsCount[allocTypeIndex][heapIndex];
+//}
 
 void MemoryAllocationTracker::compareExpectedFlagsWithAllocatedFlags(
     VkMemoryPropertyFlags requiredFlags,
