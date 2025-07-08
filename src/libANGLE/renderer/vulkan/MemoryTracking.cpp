@@ -20,7 +20,7 @@ constexpr bool kTrackMemoryAllocationSizes = true;
 #if defined(ANGLE_ENABLE_MEMORY_ALLOC_LOGGING)
 // Flag used for logging memory allocations and deallocations.
 constexpr bool kTrackMemoryAllocationDebug = true;
-//static_assert(kTrackMemoryAllocationSizes,
+static_assert(kTrackMemoryAllocationSizes,
               "kTrackMemoryAllocationSizes must be enabled to use kTrackMemoryAllocationDebug.");
 #else
 // Only the allocation size counters are used (if enabled).
