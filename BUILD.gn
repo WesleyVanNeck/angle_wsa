@@ -36,7 +36,7 @@ declare_args() {
                angle_has_build
 
   # Enable using Vulkan to collect system info as a fallback.
-  angle_enable_vulkan_system_info = false
+  angle_enable_vulkan_system_info = true
 
   # Link in system libGL, to work with apitrace.  See doc/DebuggingTips.md.
   angle_link_glx = false
@@ -59,10 +59,10 @@ declare_args() {
   angle_enable_annotator_run_time_checks = false
 
   # Enables non-conformant extensions and features
-  angle_expose_non_conformant_extensions_and_versions = false
+  angle_expose_non_conformant_extensions_and_versions = true
 
   # Optional feature that forces dirty state whenever we use a new context regardless of thread.
-  angle_force_context_check_every_call = false
+  angle_force_context_check_every_call = true
 
   # Allow shared library custom name extensions for setting soname such as libEGL.so.1
   angle_egl_extension = ""
