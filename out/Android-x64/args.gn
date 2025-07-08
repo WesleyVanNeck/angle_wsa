@@ -1,7 +1,7 @@
 target_os = "android"
 target_cpu = "x64"
 is_component_build = false
-is_debug = false
+use_remoteexec = false
 angle_build_all = false
 angle_enable_gl = false
 angle_enable_vulkan = true
