@@ -29,7 +29,6 @@ jobs:
           echo $PATH
           cd angle
           python scripts/bootstrap.py
-          gclient sync
           gn gen out/Android-${{matrix.arch}}
           autoninja -C out/Android-${{matrix.arch}}
       - name: Upload ANGLE
