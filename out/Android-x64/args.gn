@@ -12,5 +12,4 @@ angle_enable_metal = false
 angle_use_custom_libvulkan = true
 use_reclient = false
 use_siso = false
-is_clang = false
 angle_expose_non_conformant_extensions_and_versions = true
