@@ -36,7 +36,7 @@ declare_args() {
                angle_has_build
 
   # Enable using Vulkan to collect system info as a fallback.
-  angle_enable_vulkan_system_info = true
+  angle_enable_vulkan_system_info = false
 
   # Link in system libGL, to work with apitrace.  See doc/DebuggingTips.md.
   angle_link_glx = false
@@ -59,10 +59,10 @@ declare_args() {
   angle_enable_annotator_run_time_checks = false
 
   # Enables non-conformant extensions and features
-  angle_expose_non_conformant_extensions_and_versions = true
+  angle_expose_non_conformant_extensions_and_versions = false
 
   # Optional feature that forces dirty state whenever we use a new context regardless of thread.
-  angle_force_context_check_every_call = true
+  angle_force_context_check_every_call = false
 
   # Allow shared library custom name extensions for setting soname such as libEGL.so.1
   angle_egl_extension = ""
@@ -363,6 +363,7 @@ config("extra_warnings") {
       "-Wunused-but-set-variable",
       "-Wsuggest-destructor-override",
       "-Wsuggest-override",
+      "-Wno-thread-safety",
 
       # The below warnings are used by WebKit. We enable them to make rolling
       # ANGLE in WebKit easier.
