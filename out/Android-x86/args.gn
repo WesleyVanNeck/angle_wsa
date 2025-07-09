@@ -1,7 +1,6 @@
 target_os = "android"
 target_cpu = "x86"
 is_component_build = false
-skia_use_angle = true 
 use_remoteexec = false
 angle_build_all = false
 angle_enable_gl = true
@@ -10,7 +9,6 @@ angle_enable_d3d9 = false
 angle_enable_d3d11 = false
 angle_enable_null = false
 angle_enable_metal = false
-angle_use_custom_libvulkan = true
 use_reclient = false
 use_siso = false
 angle_expose_non_conformant_extensions_and_versions = true
