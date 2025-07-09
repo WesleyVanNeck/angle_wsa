@@ -30,11 +30,13 @@ jobs:
           cd angle
           python scripts/bootstrap.py
           gclient sync
-          gn args out/Release-${{matrix.arch}}
-          autoninja -C out/Release-${{matrix.arch
+          gn gen out/Android-${{matrix.arch}}
+          autoninja -C out/Android-${{matrix.arch}}
       - name: Upload ANGLE
         uses: actions/upload-artifact@v4
         with:
           name: angle-libs-${{matrix.arch}}
           path: |
-            angle/out/Release-${{matrix.arch/*
+            angle/out/Android-${{matrix.arch}}/libGLESv1_CM_angle.so
+            angle/out/Android-${{matrix.arch}}/libGLESv2_angle.so
+            angle/out/Android-${{matrix.arch}}/libEGL_angle.so
