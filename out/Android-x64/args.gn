@@ -1,5 +1,6 @@
 target_os = "android"
 target_cpu = "x64"
+dcheck_always_on = false
 is_component_build = false
 is_debug = false
 angle_assert_always_on = false
