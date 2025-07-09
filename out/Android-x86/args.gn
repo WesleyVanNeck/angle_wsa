@@ -5,4 +5,3 @@ is_debug = false
 angle_assert_always_on = false
 use_reclient = false
 use_siso = false
-is_official_build = true
