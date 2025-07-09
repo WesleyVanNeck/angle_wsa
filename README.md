@@ -9,7 +9,7 @@ Metal and MacOS, Chrome OS, and Fuchsia support.
 ### Level of OpenGL ES support via backing renderers
 
 |                |  Direct3D 9   |  Direct3D 11     |   Desktop GL   |    GL ES      |  Vulkan  |    Metal      |
-|----------------|:-------------:|:----------------:|:--------------:|:-------------:|:--------:|:-------------:|
+|----------------|:-------------:|:----------------:|:--------------:|:-------------:|:--------:|:-------------:| 
 | OpenGL ES 2.0  |    complete   |    complete      |    complete    |    complete   | complete |    complete   |
 | OpenGL ES 3.0  |               |    complete      |    complete    |    complete   | complete |    complete   |
 | OpenGL ES 3.1  |        | [incomplete][ES31OnD3D] |    complete    |    complete   | complete |               |
