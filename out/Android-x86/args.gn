@@ -10,6 +10,6 @@ angle_enable_d3d11 = false
 angle_enable_null = false
 angle_enable_metal = false
 angle_use_custom_libvulkan = true
-use_reclient = true
+use_reclient = false
 use_siso = false
 angle_expose_non_conformant_extensions_and_versions = true
