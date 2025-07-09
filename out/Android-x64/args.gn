@@ -1,10 +1,12 @@
 target_os = "android"
 target_cpu = "x64"
 is_component_build = false
+is_debug = true
+skia_use_angle = true
 use_remoteexec = false
 angle_build_all = false
 angle_enable_gl = true
-angle_enable_vulkan = false
+angle_enable_vulkan = true
 angle_enable_d3d9 = false
 angle_enable_d3d11 = false
 angle_enable_null = false
