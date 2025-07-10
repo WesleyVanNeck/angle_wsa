@@ -4,5 +4,5 @@ angle_assert_always_on = false
 use_reclient = false
 use_siso = false
 angle_enable_gles = true
-angle_enable_vulkan = true
+angle_enable_vulkan = false
 angle_expose_non_conformant_extensions_and_versions = true
