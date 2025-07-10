@@ -11,17 +11,12 @@
 
 #include "common/system_utils.h"
 
-#include <cstdlib>
- 
 namespace angle
 {
 namespace vk
 {
 void *OpenLibVulkan()
 {
-    if (std::getenv("VULKAN_PTR"))
-        return (void*) std::strtoul(std::getenv("VULKAN_PTR"), NULL, 0x10);
- 
     constexpr const char *kLibVulkanNames[] = {
 #if defined(ANGLE_PLATFORM_WINDOWS)
         "vulkan-1.dll",
@@ -36,7 +31,7 @@ void *OpenLibVulkan()
     };
 
     constexpr SearchType kSearchTypes[] = {
-// On Android, Fuchsia and GGP we use the system libvulkan.
+// On Android and Fuchsia we use the system libvulkan.
 #if defined(ANGLE_USE_CUSTOM_LIBVULKAN)
         SearchType::ModuleDir,
 #else
