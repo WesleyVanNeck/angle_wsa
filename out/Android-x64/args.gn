@@ -14,3 +14,5 @@ angle_enable_vksl = true
 libcxx_abi_unstable = false
 android32_ndk_api_level = 33
 android64_ndk_api_level = 33
+angle_vulkan_display_mode = "offscreen"
+angle_use_vulkan_display = true
