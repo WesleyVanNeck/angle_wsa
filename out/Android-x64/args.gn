@@ -18,4 +18,4 @@ angle_vulkan_display_mode = "headless"
 angle_use_vulkan_display = true
 angle_test_enable_system_egl = true
 angle_enable_vulkan_system_info = true
-libEGL_egl_loader_config = true
+angle_expose_non_conformant_extensions_and_versions = true
