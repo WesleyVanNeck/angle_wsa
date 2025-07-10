@@ -809,11 +809,6 @@ deps = {
     'condition': 'not build_with_chromium',
   },
 
-  'third_party/llvm/src': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project@1fd8d3fea53e6e4573cdce55bd38ef0a7813a442',
-    'condition': 'not build_with_chromium',
-  },
-
   'third_party/jdk': {
       'packages': [
           {
@@ -4628,29 +4623,6 @@ hooks = [
   },
 
   # Pull rc binaries using checked-in hashes.
-  {
-    'name': 'rc_win',
-    'pattern': '.',
-    'condition': 'checkout_win and host_os == "win" and not build_with_chromium',
-    'action': [ 'python3',
-                'third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--bucket', 'chromium-browser-clang/rc',
-                '-s', 'build/toolchain/win/rc/win/rc.exe.sha1',
-    ],
-  },
-
-  {
-    'name': 'rc_mac',
-    'pattern': '.',
-    'condition': 'checkout_win and host_os == "mac" and not build_with_chromium',
-    'action': [ 'python3',
-                'third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--bucket', 'chromium-browser-clang/rc',
-                '-s', 'build/toolchain/win/rc/mac/rc.sha1',
-    ],
-  },
   {
     'name': 'rc_linux',
     'pattern': '.',
