@@ -243,7 +243,7 @@ void MemoryAllocationTracker::onMemoryAllocImpl(vk::MemoryAllocationType allocTy
                                                 uint32_t memoryTypeIndex,
                                                 void *handle)
 {
-    //ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
+    ASSERT(allocType != vk::MemoryAllocationType::InvalidEnum && size != 0);
 
     if (kTrackMemoryAllocationDebug)
     {
