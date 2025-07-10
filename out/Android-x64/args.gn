@@ -17,6 +17,5 @@ android64_ndk_api_level = 33
 angle_vulkan_display_mode = "headless"
 angle_use_vulkan_display = true
 angle_test_enable_system_egl = true
-angle_link_glx = true
 angle_enable_vulkan_system_info = true
 libEGL_egl_loader_config = true
