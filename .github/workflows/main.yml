@@ -31,7 +31,7 @@ jobs:
           python scripts/bootstrap.py
           gclient sync
           gn gen out/Android-${{matrix.arch}}
-          autoninja -C out/Android-${{matrix.arch}}
+          autoninja -C out/Android-${{matrix.arch}} angle_apks
       - name: Upload ANGLE
         uses: actions/upload-artifact@v4
         with:
@@ -40,3 +40,4 @@ jobs:
             angle/out/Android-${{matrix.arch}}/libGLESv1_CM_angle.so
             angle/out/Android-${{matrix.arch}}/libGLESv2_angle.so
             angle/out/Android-${{matrix.arch}}/libEGL_angle.so
+            angle/out/Android-${{matrix.arch}}/*.apk
