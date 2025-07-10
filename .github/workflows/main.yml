@@ -40,3 +40,4 @@ jobs:
             angle/out/Android-${{matrix.arch}}/libGLESv1_CM_angle.so
             angle/out/Android-${{matrix.arch}}/libGLESv2_angle.so
             angle/out/Android-${{matrix.arch}}/libEGL_angle.so
+            angle/out/Android-${{matrix.arch}}/*
