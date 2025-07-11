@@ -1,13 +1,6 @@
 target_os = "android"
 target_cpu = "x64"
-angle_assert_always_on = false
-use_reclient = false
-use_siso = false
-angle_enable_vulkan = true
 is_component_build = false
-ignore_elf32_limitations = true
-angle_extract_native_libs = true
 is_debug = false
-is_official_build = false
-symbol_level = 0
-strip_debug_info = true
+angle_assert_always_on = false
+use_remoteexec = false
