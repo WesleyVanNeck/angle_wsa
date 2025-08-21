@@ -1419,6 +1419,9 @@ void InitDynamicRenderingLocalReadFunctions(VkDevice device);
 void InitFragmentShadingRateKHRInstanceFunction(VkInstance instance);
 void InitFragmentShadingRateKHRDeviceFunction(VkDevice device);
 
+// VK_KHR_maintenance5
+void InitMaintenance5Functions(VkDevice device);
+
 // VK_GOOGLE_display_timing
 void InitGetPastPresentationTimingGoogleFunction(VkDevice device);
 
@@ -1624,6 +1627,9 @@ enum class RenderPassClosureReason
     // In case of memory budget issues, pending garbage needs to be freed.
     ExcessivePendingGarbage,
     OutOfMemory,
+
+    // In case of reaching the render pass limit in the command buffer, it should be submitted.
+    RenderPassCountLimitReached,
 
     InvalidEnum,
     EnumCount = InvalidEnum,

@@ -941,6 +941,133 @@ void main() {
     glDeleteProgram(program);
 }
 
+// Tests that bools function correctly in a uniform. WGSL does not allow booleans in the uniform
+// address space.
+TEST_P(SimpleUniformUsageTestES3, Bool)
+{
+    constexpr char kFragShader[] = R"(#version 300 es
+precision mediump float;
+struct Uniforms {
+    bool a;
+
+    bool[2] aArr;
+};
+uniform Uniforms unis;
+out vec4 fragColor;
+void main() {
+  bool a = unis.a;
+
+  fragColor = vec4(a, 0.0, 0.0, 1.0);
+})";
+
+    GLuint program = CompileProgram(essl3_shaders::vs::Simple(), kFragShader);
+    ASSERT_NE(program, 0u);
+    glUseProgram(program);
+
+    GLint uniformALocation = glGetUniformLocation(program, "unis.a");
+    ASSERT_NE(uniformALocation, -1);
+
+    GLuint a = 1;
+
+    glUniform1ui(uniformALocation, a);
+
+    drawQuad(program, essl1_shaders::PositionAttrib(), 0.0f);
+    ASSERT_GL_NO_ERROR();
+    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::red);
+
+    glDeleteProgram(program);
+}
+
+// Tests that bool in an array in a uniform can be used in a shader.
+TEST_P(SimpleUniformUsageTestES3, BoolInArray)
+{
+    constexpr char kFragShader[] = R"(#version 300 es
+precision mediump float;
+struct Uniforms {
+    bool a;
+
+    bool[2] aArr;
+};
+uniform Uniforms unis;
+out vec4 fragColor;
+void main() {
+  bool[2] a = unis.aArr;
+
+  fragColor = vec4(a[0], a[1], 0.0, 1.0);
+})";
+
+    GLuint program = CompileProgram(essl3_shaders::vs::Simple(), kFragShader);
+    ASSERT_NE(program, 0u);
+    glUseProgram(program);
+
+    GLint uniformALocation = glGetUniformLocation(program, "unis.aArr");
+    ASSERT_NE(uniformALocation, -1);
+
+    GLuint aArr[] = {1, 0};
+
+    glUniform1uiv(uniformALocation, 2, aArr);
+
+    drawQuad(program, essl1_shaders::PositionAttrib(), 0.0f);
+    ASSERT_GL_NO_ERROR();
+    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::red);
+
+    GLuint aArrFlipped[] = {0, 1};
+
+    glUniform1uiv(uniformALocation, 2, aArrFlipped);
+
+    drawQuad(program, essl1_shaders::PositionAttrib(), 0.0f);
+    ASSERT_GL_NO_ERROR();
+    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::green);
+
+    glDeleteProgram(program);
+}
+
+// Tests that a uniform array containing bool can be indexed into correctly.
+// The WGSL translator includes some optimizations around this case.
+TEST_P(SimpleUniformUsageTestES3, BoolInArrayWithOptimization)
+{
+    constexpr char kFragShader[] = R"(#version 300 es
+precision mediump float;
+struct Uniforms {
+    bool a;
+
+    bool[2] aArr;
+};
+uniform Uniforms unis;
+out vec4 fragColor;
+void main() {
+  bool a0 = unis.aArr[0];
+  bool a1 = unis.aArr[1];
+
+  fragColor = vec4(a0, a1, 0.0, 1.0);
+})";
+
+    GLuint program = CompileProgram(essl3_shaders::vs::Simple(), kFragShader);
+    ASSERT_NE(program, 0u);
+    glUseProgram(program);
+
+    GLint uniformALocation = glGetUniformLocation(program, "unis.aArr");
+    ASSERT_NE(uniformALocation, -1);
+
+    GLuint aArr[] = {1, 0};
+
+    glUniform1uiv(uniformALocation, 2, aArr);
+
+    drawQuad(program, essl1_shaders::PositionAttrib(), 0.0f);
+    ASSERT_GL_NO_ERROR();
+    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::red);
+
+    GLuint aArrFlipped[] = {0, 1};
+
+    glUniform1uiv(uniformALocation, 2, aArrFlipped);
+
+    drawQuad(program, essl1_shaders::PositionAttrib(), 0.0f);
+    ASSERT_GL_NO_ERROR();
+    EXPECT_PIXEL_COLOR_EQ(0, 0, GLColor::green);
+
+    glDeleteProgram(program);
+}
+
 // Tests that matCx2 (matrix with C columns and 2 rows) functions correctly in a
 // uniform. WGSL's matCx2 does not match std140 layout.
 TEST_P(SimpleUniformUsageTestES3, MatCx2)
@@ -2340,6 +2467,38 @@ void main() {
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
     glDeleteProgram(program);
+}
+
+// Test that TCompiler::sortUniforms() does not break the shader code when there are multiple
+// uniforms of the same struct data type, and one of them is the struct specifier.
+TEST_P(UniformTestES31, UniformReorderDoesNotBreakStructUniforms)
+{
+    constexpr char kFS[] =
+        "#version 310 es\n"
+        "precision mediump float;\n"
+        "out highp vec4 my_FragColor;\n"
+        "uniform struct{vec3 b;}G[1],S;\n"
+        "void main()\n"
+        "{}";
+
+    GLuint program = CompileProgram(essl31_shaders::vs::Simple(), kFS);
+    ASSERT_NE(program, 0u);
+}
+
+// That that TCompiler::sortUniforms() does not break the shader code when there are multiple
+// uniforms of the struct data type, and both of them are struct specifiers, and one struct
+// references the other struct.
+TEST_P(UniformTestES31, UniformReorderDoesNotBreakStructUniformsV2)
+{
+    constexpr char kFS[] =
+        "#version 310 es\n"
+        "precision mediump float;\n"
+        "uniform struct S1 { samplerCube ar; } a1;\n"
+        "uniform struct S2 { S1 s; } a2;\n"
+        "void main (void)\n"
+        "{}";
+    GLuint program = CompileProgram(essl31_shaders::vs::Simple(), kFS);
+    ASSERT_NE(program, 0u);
 }
 
 // Test a uniform struct containing a non-square matrix and a boolean.

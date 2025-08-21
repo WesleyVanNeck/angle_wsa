@@ -170,14 +170,18 @@ void InitBuiltInResources(ShBuiltInResources *resources)
     memset(resources, 0, sizeof(*resources));
 
     // Constants.
-    resources->MaxVertexAttribs             = 8;
-    resources->MaxVertexUniformVectors      = 128;
-    resources->MaxVaryingVectors            = 8;
-    resources->MaxVertexTextureImageUnits   = 0;
-    resources->MaxCombinedTextureImageUnits = 8;
-    resources->MaxTextureImageUnits         = 8;
-    resources->MaxFragmentUniformVectors    = 16;
-    resources->MaxDrawBuffers               = 1;
+    resources->MaxVertexAttribs                    = 8;
+    resources->MaxVertexUniformVectors             = 128;
+    resources->MaxVaryingVectors                   = 8;
+    resources->MaxVertexTextureImageUnits          = 0;
+    resources->MaxCombinedTextureImageUnits        = 8;
+    resources->MaxTextureImageUnits                = 8;
+    resources->MaxFragmentUniformVectors           = 16;
+    resources->MaxDrawBuffers                      = 1;
+    resources->ShadingRateFlag2VerticalPixelsEXT   = 1;
+    resources->ShadingRateFlag4VerticalPixelsEXT   = 2;
+    resources->ShadingRateFlag2HorizontalPixelsEXT = 4;
+    resources->ShadingRateFlag4HorizontalPixelsEXT = 8;
 
     // Extensions.
     resources->OES_standard_derivatives                       = 0;
@@ -227,6 +231,8 @@ void InitBuiltInResources(ShBuiltInResources *resources)
     resources->OES_tessellation_shader                        = 0;
     resources->OES_texture_buffer                             = 0;
     resources->EXT_texture_buffer                             = 0;
+    resources->EXT_fragment_shading_rate                      = 0;
+    resources->EXT_fragment_shading_rate_primitive            = 0;
     resources->OES_sample_variables                           = 0;
     resources->EXT_clip_cull_distance                         = 0;
     resources->ANGLE_clip_cull_distance                       = 0;
@@ -252,6 +258,8 @@ void InitBuiltInResources(ShBuiltInResources *resources)
 
     // Disable name hashing by default.
     resources->HashFunction = nullptr;
+
+    resources->UserVariableNamePrefix = kUserDefinedNamePrefix;
 
     resources->MaxExpressionComplexity = 256;
     resources->MaxStatementDepth       = 256;
@@ -906,7 +914,7 @@ uint32_t GetAdvancedBlendEquations(const ShHandle handle)
 // Can't prefix with just _ because then we might introduce a double underscore, which is not safe
 // in GLSL (ESSL 3.00.6 section 3.8: All identifiers containing a double underscore are reserved for
 // use by the underlying implementation). u is short for user-defined.
-const char kUserDefinedNamePrefix[] = "_u";
+const char kUserDefinedNamePrefix = 'u';
 
 const char *BlockLayoutTypeToString(BlockLayoutType type)
 {

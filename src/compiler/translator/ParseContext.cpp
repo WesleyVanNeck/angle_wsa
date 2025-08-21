@@ -771,6 +771,9 @@ bool TParseContext::checkCanBeLValue(const TSourceLoc &line, const char *op, TIn
         case EvqLayerIn:
             message = "can't modify gl_Layer in a fragment shader";
             break;
+        case EvqShadingRateEXT:
+            message = "can't modify gl_ShadingRateEXT";
+            break;
         case EvqSampleID:
             message = "can't modify gl_SampleID";
             break;
@@ -7040,6 +7043,11 @@ bool TParseContext::binaryOpCommonCheck(TOperator op,
             if (!left->isScalar() || !right->isScalar())
             {
                 error(loc, "comparison operator only defined for scalars", GetOperatorString(op));
+                return false;
+            }
+            if (left->getBasicType() == EbtBool || right->getBasicType() == EbtBool)
+            {
+                error(loc, "comparison operator not defined for booleans", GetOperatorString(op));
                 return false;
             }
             break;
