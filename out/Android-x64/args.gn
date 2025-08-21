@@ -4,12 +4,12 @@ is_component_build = false
 is_debug = false
 angle_assert_always_on = false
 use_remoteexec = false
-angle_enable_cl = true
-angle_enable_cl_testing = true
+angle_enable_cl = false
+angle_enable_cl_testing = false
 dcheck_always_on = false
 angle_enable_gl = false
 angle_enable_vulkan = true
-angle_enable_d3d9 = true
-angle_enable_d3d11 = true
+angle_enable_d3d9 = false
+angle_enable_d3d11 = false
 angle_enable_null = false
 
